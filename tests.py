@@ -1,27 +1,15 @@
 import unittest
-from functions.get_files_info import get_files_info
-from functions.get_file_content import get_file_content
+from functions.write_file import write_file
 
 class TestFunctions(unittest.TestCase):
-  def test_calculator_main_file(self):
-    print("\nResult from main file:")
-    contents = get_file_content("calculator", "main.py")
-    print(contents)
+  def test_write_lorem_txt(self):
+    print(write_file("calculator", "lorem.txt", "wait, this isn't lorem ipsum"))
 
-  def test_calculator_pkg_calculator_file(self):
-    print("\nResult from pkg/calculator file:")
-    contents = get_file_content("calculator", "pkg/calculator.py")
-    print(contents)
-
-  def test_bin_cat_file(self):
-    print("\nResult from /bin/cat file:")
-    contents = get_file_content("calculator", "/bin/cat")
-    print(contents)
-
-  def test_calculator_pkg_does_not_exist_file(self):
-    print("\nResult from pkg/does_not_exist.py file:")
-    contents = get_file_content("calculator", "pkg/does_not_exist.py")
-    print(contents)
+  def test_write_more_lorem_txt(self):
+    print(write_file("calculator", "pkg/morelorem.txt", "lorem ipsum dolor sit amet"))
+  
+  def test_write_to_tmp_dir_failure(self):
+    print(write_file("calculator", "/tmp/temp.txt", "this should not be allowed"))
 
 if __name__ == "__main__":
   unittest.main()
