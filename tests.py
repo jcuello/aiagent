@@ -1,34 +1,27 @@
 import unittest
 from functions.get_files_info import get_files_info
+from functions.get_file_content import get_file_content
 
 class TestFunctions(unittest.TestCase):
-  def test_calculator_curent_dir(self):
-    print("\nResult from current directory:")
-    lines = self.get_files_info_lines("calculator", ".")
-    for l in lines:
-      print(l)
+  def test_calculator_main_file(self):
+    print("\nResult from main file:")
+    contents = get_file_content("calculator", "main.py")
+    print(contents)
 
-  def test_pkg_dir(self):
-    print("\nResult for 'pkg' directory:")
-    lines = self.get_files_info_lines("calculator", "pkg")
-    for l in lines:
-      print(l)
+  def test_calculator_pkg_calculator_file(self):
+    print("\nResult from pkg/calculator file:")
+    contents = get_file_content("calculator", "pkg/calculator.py")
+    print(contents)
 
-  def test_bin_dir(self):
-    print("\nResult for '/bin' directory:")
-    lines = self.get_files_info_lines("calculator", "/bin")
-    for l in lines:
-      print(l) 
+  def test_bin_cat_file(self):
+    print("\nResult from /bin/cat file:")
+    contents = get_file_content("calculator", "/bin/cat")
+    print(contents)
 
-  def test_previous_dir(self):
-    print("\nResult for '../' directory:")
-    lines = self.get_files_info_lines("calculator", "../")
-    for l in lines:
-      print(l) 
-
-  def get_files_info_lines(self, working_directory, directory="."):
-    lines = get_files_info(working_directory, directory).split("\n")
-    return list(filter(lambda x: not x.startswith("- __pycache__"), lines))
+  def test_calculator_pkg_does_not_exist_file(self):
+    print("\nResult from pkg/does_not_exist.py file:")
+    contents = get_file_content("calculator", "pkg/does_not_exist.py")
+    print(contents)
 
 if __name__ == "__main__":
   unittest.main()
