@@ -38,9 +38,15 @@ def main():
         print(f"Response tokens: {response.usage_metadata.candidates_token_count}")
 
     if response.function_calls != None:
-        for func_parts in response.function_calls:
-            print(f"Calling function: {func_parts.name}({func_parts.args})")
-    print(response.text)
+        # we know that there's only one function Gemini can call, 
+        # call it with the given args determined by it
+        func_parts = response.function_calls[0]
+        print(f"Calling function: {func_parts.name}({func_parts.args})")
+        print(get_files_info(**func_parts.args))
+    else:
+        # if no function was called, Gemini will give a text reply such as an
+        # error or confirmation e.g. "I can show you the files in the root directory. Would you like me to do that?"
+        print(response.text)
 
 if __name__ == "__main__":
     main()
