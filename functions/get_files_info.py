@@ -1,11 +1,9 @@
 import os
-import google
 from google.genai import types
 
-def get_files_info(directory="."):
-  result = ""
-  working_directory="/home/jose/workspace/bootdev/aiagent/calculator"
+def get_files_info(working_directory, directory="."):
   try:
+    result = ""
     path = os.path.abspath(os.path.join(working_directory, directory))
 
     if working_directory not in path:

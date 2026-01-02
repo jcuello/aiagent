@@ -1,5 +1,6 @@
 import os
 import subprocess
+from google.genai import types
 
 def run_python_file(working_directory, file_path, args=[]):
     try:
@@ -11,7 +12,7 @@ def run_python_file(working_directory, file_path, args=[]):
       if not os.path.exists(abs_path):
         return f'Error: File "{file_path}" not found.'
       
-      base_name, file_extension = os.path.splitext(abs_path)
+      _, file_extension = os.path.splitext(abs_path)
       if file_extension.lower() != '.py':
         return f'Error: "{file_path}" is not a Python file.'
       
@@ -29,4 +30,27 @@ def run_python_file(working_directory, file_path, args=[]):
     except Exception as e:
       return f"Error: executing Python file: {e}"
 
+schema_run_python_file = types.FunctionDeclaration(
+    name="run_python_file",
+    description="Runs python file specified by the file path.",
+    parameters=types.Schema(
+        type=types.Type.OBJECT,
+        properties={
+            "file_path": types.Schema(
+                type=types.Type.STRING,
+                description="The file path of the python file to run.",
+            ),
+            "args": types.Schema(
+                type=types.Type.ARRAY,
+                description="The optional list of arguments to pass to the python file.",
+                items=types.Schema(type=types.Type.STRING)
+            ),     
+        },
+    ),
+)
 
+available_functions = types.Tool(
+  function_declarations=[
+    schema_run_python_file,
+  ]
+)
